@@ -1,7 +1,7 @@
-from backend.database import get_session, AsyncSession, AsyncSessionLocal
-from pydantic import BaseModel, validator, EmailStr
-from backend.database.tables.user import User
 from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel, validator, EmailStr
+from backend.database import AsyncSessionLocal
+from backend.database.tables.user import User
 from sqlalchemy.future import select
 from backend.model import as_form
 
@@ -40,7 +40,7 @@ async def get_user(email: EmailStr, password: str):
 
 
 @router.post('/login')
-async def reg(form: LoginUser = Depends(LoginUser.as_form)):
+async def login(form: LoginUser = Depends(LoginUser.as_form)):
     try:
         user = await get_user(form.email, form.password)
     except ValueError:

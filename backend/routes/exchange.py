@@ -6,6 +6,7 @@ from backend.database.tables.user import User
 from pydantic import BaseModel, validator
 from sqlalchemy import update
 from enum import Enum
+from . import get
 
 
 router = APIRouter()
@@ -39,7 +40,7 @@ class ExchangeMoney(BaseModel):
 
 
 @router.post("/exchange")
-async def send(exchange_money: ExchangeMoney,
+async def exchange(exchange_money: ExchangeMoney,
                current_user: User = Depends(get_current_active_user),
                db_session: AsyncSession = Depends(get_session)):
 
@@ -50,14 +51,16 @@ async def send(exchange_money: ExchangeMoney,
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+    k = get.get_random(exchange_money.type1, exchange_money.type2)
+
     await db_session.execute(update(User)
                              .where(User.email == current_user.email)
                              .values(
         {exchange_money.type1.value: getattr(current_user, exchange_money.type1.name) - exchange_money.value,
-         exchange_money.type2.value: getattr(current_user, exchange_money.type2.name) + exchange_money.value}))
+         exchange_money.type2.value: getattr(current_user, exchange_money.type2.name) + k * exchange_money.value}))
 
     db_session.add(History(user_id=current_user.id, type1=exchange_money.type1.name, value1=-exchange_money.value,
-                           type2=exchange_money.type2.name, value2=exchange_money.value))
+                           type2=exchange_money.type2.name, value2=k * exchange_money.value))
 
     await db_session.commit()
 

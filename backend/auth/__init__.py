@@ -9,7 +9,7 @@ from jose import JWTError, jwt
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 async def authenticate_user(username: str, password: str):

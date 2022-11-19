@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Numeric
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Float
 from backend.database import Base, AsyncSessionLocal
 from sqlalchemy.future import select
 from datetime import datetime
@@ -27,18 +27,18 @@ class User(Base):
     is_activated = Column(Boolean, default=False, nullable=False, index=True)
     is_blocked = Column(Boolean, default=False, nullable=False, index=True)
 
-    USD = Column(Numeric, nullable=False, default=0)
-    RUB = Column(Numeric, nullable=False, default=0)
-    EUR = Column(Numeric, nullable=False, default=0)
-    BTC = Column(Numeric, nullable=False, default=0)
-    ETH = Column(Numeric, nullable=False, default=0)
-    USDT = Column(Numeric, nullable=False, default=0)
-    BCH = Column(Numeric, nullable=False, default=0)
-    LTC = Column(Numeric, nullable=False, default=0)
-    DASH = Column(Numeric, nullable=False, default=0)
-    XRP = Column(Numeric, nullable=False, default=0)
-    DOGE = Column(Numeric, nullable=False, default=0)
-    TRX = Column(Numeric, nullable=False, default=0)
+    USD = Column(Float, nullable=False, default=0)
+    RUB = Column(Float, nullable=False, default=0)
+    EUR = Column(Float, nullable=False, default=0)
+    BTC = Column(Float, nullable=False, default=0)
+    ETH = Column(Float, nullable=False, default=0)
+    USDT = Column(Float, nullable=False, default=0)
+    BCH = Column(Float, nullable=False, default=0)
+    LTC = Column(Float, nullable=False, default=0)
+    DASH = Column(Float, nullable=False, default=0)
+    XRP = Column(Float, nullable=False, default=0)
+    DOGE = Column(Float, nullable=False, default=0)
+    TRX = Column(Float, nullable=False, default=0)
 
 
 async def get_user(email: str, password: str) -> User | None:

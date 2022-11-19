@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const mainSlicer = createSlice({
     name: 'main',
     initialState: {
-        authed: true,
+        authed: false,
         admin: false,
         token: '',
     },

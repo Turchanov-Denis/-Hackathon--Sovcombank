@@ -18,6 +18,7 @@ export default function LoginPage() {
     }
     const tokenHandler = (token) => {
         dispatch(setToken(token))
+        dispatch(toAuth())
     }
     return (
         <div className='login'>

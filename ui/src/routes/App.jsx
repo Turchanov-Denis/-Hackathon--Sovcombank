@@ -6,13 +6,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import '../scss/home.scss'
 import NavBar from '../components/Home/NavBar';
 import BalanceContent from '../components/Home/BalanceContent';
+import { Outlet } from "react-router-dom";
 function App() {
 
   let navigate = useNavigate();
   const authed = useSelector((state) => state.main.authed)
   const admin = useSelector((state) => state.main.admin)
   useEffect(() => {
-    console.log(authed)
+    
     if (admin) {
       return navigate("/admin");
     }
@@ -23,7 +24,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className='wrapper'>
+      {authed && <div className='wrapper'>
         <div className='left-bar'> <LeftBar></LeftBar></div>
         <div style={{
           'width': '100%'
@@ -32,10 +33,11 @@ function App() {
             'width': '100%'
           }}><NavBar></NavBar></div>
           <div className='content'>
-            <BalanceContent />
+            {/* content  */}
+            <Outlet></Outlet>
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   )
 }

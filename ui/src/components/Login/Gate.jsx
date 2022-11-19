@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Gate({ toAuth, setToken }) {
     let navigate = useNavigate();
-
+    
 
     const formHandler = async (e) => {
         e.preventDefault();
@@ -16,6 +16,10 @@ export default function Gate({ toAuth, setToken }) {
         console.log(res.data)
 
         if (res.status != 200) { return alert('Incorect data') }
+        
+        // set verificate
+
+        
         setToken(res.data.access_token)
 
         const userByToken = await axios.get('http://79.120.76.23:8888/user/info', {
@@ -28,7 +32,7 @@ export default function Gate({ toAuth, setToken }) {
             navigate("/admin");
         }
         else {
-            navigate("/");
+            navigate("/balance");
         }
         
 

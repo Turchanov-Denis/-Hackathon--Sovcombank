@@ -12,25 +12,24 @@ export default function AdminPage() {
     const token = useSelector((state) => state.main.token)
     const getUsers = async () => {
         console.log('token', token)
-        const res = await axios.get('http://79.120.76.23:8888/ban_user', {
+        const res = await axios.get('http://79.120.76.23:8888/verified_users', {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         })
-        console.log(res.data)
-        return res.data
+
+        setUsers(res.data)
     }
     const getRequest = async () => {
         console.log('token', token)
-        const res = await axios.get('http://79.120.76.23:8888/activate_user ', {
+        const res = await axios.get('http://79.120.76.23:8888/inactive_users ', {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         })
-       
-        return res.data
+
+        setRequest(res.data)
     }
-    // const request = [{ id: '1', name: 'Mary' },]
     const dispatch = useDispatch()
     let navigate = useNavigate();
     const exitHandler = () => {
@@ -38,10 +37,31 @@ export default function AdminPage() {
         navigate("/login");
     }
 
+    const addUsersByrequest = async ({ email, state }) => {
+        await axios.post('http://79.120.76.23:8888/activate', { email, state: !state }, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        getRequest()
+        getUsers()
+    }
+
+    const assingBan = async ({ email, is_blocked }) => {
+        await axios.post('http://79.120.76.23:8888/ban', { email, state: !is_blocked }, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        getUsers()
+    }
+
     useEffect(() => {
-        setUsers(getUsers())
-        setRequest(getRequest())
+        getUsers()
+        getRequest()
+
     }, [])
+
 
     return (
         <>
@@ -49,21 +69,24 @@ export default function AdminPage() {
                 <div onClick={exitHandler} className='admin__back' >Go to Entry</div>
             </div>
             <div className='admin'>
-                <div className='admin__column'><div className='admin__users'> {users.length && users.map(user =>
-                    <Card key={user.id} style={{
+                <div className='admin__column'><div className='admin__users'> {users.length > 0 && users.map((user, index) =>
+
+                    <Card key={index} style={{
                         'display': 'flex'
                     }}>
-                        <Card.Title>{user.name}</Card.Title>
-                        <button style={{
+                        <Card.Title>{user.email}</Card.Title>
+                        {user.is_blocked ? <button onClick={() => { assingBan(user) }} style={{
                             'borderColor': 'rgba(83, 83, 83, 0.0)'
-                        }}> banned</button>
+                        }}>recive</button> : <button onClick={() => { assingBan(user) }} style={{
+                            'borderColor': 'rgba(83, 83, 83, 0.0)'
+                        }}>assign ban</button>}
                     </Card>)}
                 </div></div>
-                <div className='admin__column'><div className='admin__request'>{request.length && request.map(user => <Card key={user.id} style={{
+                <div className='admin__column'><div className='admin__request'>{request.length > 0 && request.map((user, index) => <Card key={index} style={{
                     'display': 'flex'
                 }}>
-                    <Card.Title>{user.name}</Card.Title>
-                    <button style={{
+                    <Card.Title>{user.email}</Card.Title>
+                    <button onClick={() => addUsersByrequest(user)} style={{
                         'borderColor': 'rgba(83, 83, 83, 0.0)'
                     }}> add</button>
                 </Card>)}</div></div>

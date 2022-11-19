@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 export const mainSlicer = createSlice({
     name: 'main',
     initialState: {
-        authed: true,
+        authed: false,
         admin: false,
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyQG1haWwucnUiLCJleHAiOjE2Njg4OTQ5NzB9.yhyGMt-R59RaVrqPjU6KS_b9ryh8b9zDqqnSQI2JWQM",
+        token: "",
     },
     reducers: {
         toAuth: (state) => {

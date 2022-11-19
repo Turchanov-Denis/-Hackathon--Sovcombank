@@ -1,14 +1,15 @@
 from backend.database import get_session, AsyncSession, AsyncSessionLocal
-from pydantic import BaseModel, validator, EmailStr
-from backend.database.tables.user import User
+from backend.database.tables.user import User, get_user_from_email
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.future import select
-from backend.model import as_form
+from pydantic import BaseModel, validator, EmailStr
+from backend.auth import create_access_token
+from backendConfig import FastApiConfig
+from datetime import timedelta
+
 
 router = APIRouter()
 
 
-@as_form
 class RegistrationUser(BaseModel):
     email: EmailStr
     password: str
@@ -29,17 +30,14 @@ class RegistrationUser(BaseModel):
 
 
 async def check_unique_email(email: EmailStr):
-    async with AsyncSessionLocal() as db_session:
-        # Валидация пользователя (на уникальный email)
-        query = select(User.email).where(User.email == email)
-        find_user = (await db_session.execute(query)).first()
-        if find_user:
-            raise ValueError("Email is already busy")
+    find_user = await get_user_from_email(email)
+    if find_user:
+        raise ValueError("Email is already busy")
 
 
 @router.post('/registration')
 @router.post('/reg')
-async def reg(form: RegistrationUser = Depends(RegistrationUser.as_form),
+async def reg(form: RegistrationUser,
               db_session: AsyncSession = Depends(get_session)):
     try:
         await check_unique_email(form.email)
@@ -64,4 +62,7 @@ async def reg(form: RegistrationUser = Depends(RegistrationUser.as_form),
     db_session.add(new_user)
     await db_session.commit()
 
-    return new_user
+    access_token_expires = timedelta(minutes=FastApiConfig.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = await create_access_token(data={"sub": new_user.email}, expires_delta=access_token_expires)
+
+    return {"access_token": access_token, "token_type": "bearer"}

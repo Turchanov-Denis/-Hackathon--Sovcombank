@@ -1,15 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, validator, EmailStr
-from backend.database import AsyncSessionLocal
-from backend.database.tables.user import User
-from sqlalchemy.future import select
-from backend.model import as_form
+from backend.database.tables.user import get_user
+from backend.auth import create_access_token
+from backendConfig import FastApiConfig
+from datetime import timedelta
 
 
 router = APIRouter()
 
 
-@as_form
 class LoginUser(BaseModel):
     email: EmailStr
     password: str
@@ -29,35 +28,19 @@ class LoginUser(BaseModel):
         return password
 
 
-async def get_user(email: EmailStr, password: str):
-    async with AsyncSessionLocal() as db_session:
-        # Валидация пользователя (на уникальный email)
-        query = select(User.email).where(User.email == email, User.password == password)
-        find_user = (await db_session.execute(query)).first()
-        if find_user:
-            raise ValueError("Email is already busy")
-        return find_user
-
-
 @router.post('/login')
-async def login(form: LoginUser = Depends(LoginUser.as_form)):
-    try:
-        user = await get_user(form.email, form.password)
-    except ValueError:
-        return HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail={
-                "detail": [
-                    {
-                        "loc": [
-                            "body",
-                            "email"
-                        ],
-                        "msg": "user not found",
-                        "type": "value_error.email"
-                    }
-                ]
-            }
+async def login(form: LoginUser):
+    user = await get_user(form.email, form.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
-    return user
+    access_token_expires = timedelta(minutes=FastApiConfig.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = await create_access_token(
+        data={"sub": user.email}, expires_delta=access_token_expires
+    )
+
+    return {"access_token": access_token, "token_type": "bearer"}

@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Float
 from backend.database import Base, AsyncSessionLocal
+from sqlalchemy.orm import relationship
 from sqlalchemy.future import select
 from datetime import datetime
 
@@ -39,6 +40,8 @@ class User(Base):
     XRP = Column(Float, nullable=False, default=0)
     DOGE = Column(Float, nullable=False, default=0)
     TRX = Column(Float, nullable=False, default=0)
+
+    history = relationship("History", back_populates="user")
 
 
 async def get_user(email: str, password: str) -> User | None:

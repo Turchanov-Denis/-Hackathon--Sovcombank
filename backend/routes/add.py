@@ -1,4 +1,5 @@
 from backend.database import AsyncSession, get_session
+from backend.database.tables.history import History
 from backend.auth import get_current_active_user
 from fastapi import APIRouter, Depends, status
 from backend.database.tables.user import User
@@ -42,6 +43,7 @@ async def add(add_money: AddMoney,
     await db_session.execute(update(User)
                              .where(User.email == current_user.email)
                              .values({add_money.type.value: getattr(current_user, add_money.type.name) + add_money.value}))
+    db_session.add(History(user_id=current_user.id, type1=add_money.type.name, value1=add_money.value))
     await db_session.commit()
 
     return {"status_code": status.HTTP_200_OK}

@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Numeric
 from backend.database import Base, AsyncSessionLocal
 from sqlalchemy.future import select
-# from sqlalchemy.orm import relationship
 from datetime import datetime
 
 
@@ -21,16 +20,25 @@ class User(Base):
     # Personal information
     name = Column(String(32))
     surname = Column(String(32))
-    # currencies = relationship("Currency",
-    #                           back_populates="user",
-    #                           cascade="all, delete",
-    #                           passive_deletes=True)
 
     create_date = Column(DateTime, default=datetime.utcnow)
     last_update = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     is_activated = Column(Boolean, default=False, nullable=False, index=True)
     is_blocked = Column(Boolean, default=False, nullable=False, index=True)
+
+    USD = Column(Numeric, nullable=False, default=0)
+    RUB = Column(Numeric, nullable=False, default=0)
+    EUR = Column(Numeric, nullable=False, default=0)
+    BTC = Column(Numeric, nullable=False, default=0)
+    ETH = Column(Numeric, nullable=False, default=0)
+    USDT = Column(Numeric, nullable=False, default=0)
+    BCH = Column(Numeric, nullable=False, default=0)
+    LTC = Column(Numeric, nullable=False, default=0)
+    DASH = Column(Numeric, nullable=False, default=0)
+    XRP = Column(Numeric, nullable=False, default=0)
+    DOGE = Column(Numeric, nullable=False, default=0)
+    TRX = Column(Numeric, nullable=False, default=0)
 
 
 async def get_user(email: str, password: str) -> User | None:
@@ -45,3 +53,5 @@ async def get_user_from_email(email: str) -> User | None:
         query = select(User).where(User.email == email)
         find_user = (await db_session.execute(query)).scalar()
     return find_user
+
+

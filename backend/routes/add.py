@@ -29,7 +29,7 @@ class AddMoney(BaseModel):
     value: float
 
     @validator("value")
-    def check_value(self, value):
+    def check_value(cls, value):
         if value < 0:
             raise ValueError("Value wasn't < 0")
         return value

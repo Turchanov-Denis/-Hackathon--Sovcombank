@@ -6,8 +6,12 @@ function App() {
   
 let navigate = useNavigate();
   const authed = useSelector((state)=>state.main.authed)
+  const admin = useSelector((state)=>state.main.admin)
 useEffect(() => {
   console.log(authed)
+    if (admin) {
+      return navigate("/admin");
+    }
    if (!authed){
       return navigate("/login");
    }

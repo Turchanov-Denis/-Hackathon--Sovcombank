@@ -5,7 +5,7 @@ export const mainSlicer = createSlice({
     initialState: {
         authed: true,
         admin: false,
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyQG1haWwucnUiLCJleHAiOjE2Njg4ODUwNjF9.Xc9X3n-UwmWCXZ3CZHHjvq17ted1ol9_zX532cJjRqg",
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyQG1haWwucnUiLCJleHAiOjE2Njg4OTQ5NzB9.yhyGMt-R59RaVrqPjU6KS_b9ryh8b9zDqqnSQI2JWQM",
     },
     reducers: {
         toAuth: (state) => {

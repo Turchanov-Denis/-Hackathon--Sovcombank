@@ -1,4 +1,4 @@
-from . import login, registration, verified_users, inactive_users, ban, activate
+from . import login, registration, verified_users, inactive_users, ban, activate, add
 from .user import info
 
 from typing import TYPE_CHECKING
@@ -15,5 +15,7 @@ def load_routes(app: 'FastAPI'):
     app.include_router(ban.router)
     app.include_router(inactive_users.router)
     app.include_router(activate.router)
+
+    app.include_router(add.router)
 
     app.include_router(info.router, prefix="/user")

@@ -28,9 +28,9 @@ async def startup_event():
     async with AsyncSessionLocal() as session:
         session.add(User(type=1, email="admin@ad.in", password="admin123"))
 
-        session.add(User(email="user@mail.ru", password="user123"))
-        session.add(User(is_blocked=True, email="user2@mail.ru", password="user123"))
-        session.add(User(is_activated=True, email="user3@mail.ru", password="user123"))
+        session.add(User(email="user@mail.ru", password="useruser"))
+        session.add(User(is_blocked=True, email="user2@mail.ru", password="useruser"))
+        session.add(User(is_activated=True, email="user3@mail.ru", password="useruser"))
 
         session.add(User(is_activated=True, is_blocked=True, email="user4@mail.ru", password="user123"))
         await session.commit()

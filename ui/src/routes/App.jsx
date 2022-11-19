@@ -1,7 +1,11 @@
 import { useState,useEffect } from 'react'
 import LoginPage from './LoginPage'
+import LeftBar from '../components/Home/LeftBar';
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
+import '../scss/home.scss'
+import NavBar from '../components/Home/NavBar';
+import BalanceContent from '../components/Home/BalanceContent';
 function App() {
   
 let navigate = useNavigate();
@@ -20,6 +24,17 @@ useEffect(() => {
   return (
     <div className="App">
       <div className='wrapper'>
+        <div className='left-bar'> <LeftBar></LeftBar></div>
+          <div style={{
+            'width': '100%'
+          }}>
+          <div style={{
+            'width': '100%'
+          }}><NavBar></NavBar></div>
+          <div className='content'>
+              <BalanceContent/>
+          </div>
+          </div>
       </div>
     </div>
   )

@@ -2,26 +2,26 @@ from backend.database import AsyncSession, get_session
 from backend.auth import get_current_active_user
 from fastapi import APIRouter, Depends, status
 from backend.database.tables.user import User
-from pydantic import BaseModel
-from pydantic import validator
+from pydantic import BaseModel, validator
+from sqlalchemy import update
 from enum import Enum
 
 router = APIRouter()
 
 
 class MoneyType(Enum):
-    USD: str
-    RUB: str
-    EUR: str
-    BTC: str
-    ETH: str
-    USDT: str
-    BCH: str
-    LTC: str
-    DASH: str
-    XRP: str
-    DOGE: str
-    TRX: str
+    USD: str = "USD"
+    RUB: str = "RUB"
+    EUR: str = "EUR"
+    BTC: str = "BTC"
+    ETH: str = "ETH"
+    USDT: str = "USDT"
+    BCH: str = "BCH"
+    LTC: str = "LTC"
+    DASH: str = "DASH"
+    XRP: str = "XRP"
+    DOGE: str = "DOGE"
+    TRX: str = "TRX"
 
 
 class AddMoney(BaseModel):
@@ -38,8 +38,10 @@ class AddMoney(BaseModel):
 @router.post("/add")
 async def add(add_money: AddMoney,
               current_user: User = Depends(get_current_active_user),
-              db_session: AsyncSession = Depends(get_session), ):
-    current_user.__setattr__(add_money.type, current_user.__getattribute__(add_money.type) + add_money.value)
+              db_session: AsyncSession = Depends(get_session)):
+    await db_session.execute(update(User)
+                             .where(User.email == current_user.email)
+                             .values({add_money.type.value: getattr(current_user, add_money.type.name) + add_money.value}))
     await db_session.commit()
 
     return {"status_code": status.HTTP_200_OK}

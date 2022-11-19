@@ -12,7 +12,8 @@ import { Provider } from 'react-redux'
 import AdminPage from './routes/AdminPage';
 import BalanceContent from './components/Home/BalanceContent';
 import ReplenishAmount from './components/Home/ReplenishAmount';
-
+import Exchange from './components/Home/Exchange';
+import History from './components/Home/History';
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,15 @@ const router = createBrowserRouter([
         path: "/replenish",
         element: <ReplenishAmount />,
       },
+      ,
+      {
+        path: "/exchange",
+        element: <Exchange />,
+      },
+      {
+        path: "/history",
+        element: <History />,
+      }
     ],
   },
   {

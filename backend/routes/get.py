@@ -57,6 +57,6 @@ def get_random(type1: MoneyType, type2: MoneyType):
     return price[type1.name][type2.name] * (1 + random() / 20)
 
 
-@router.get("/get")
+@router.post("/get")
 async def get(get_money: getMoney, _: User = Depends(get_current_active_user)):
     return get_random(get_money.type1, get_money.type2)

@@ -1,0 +1,8 @@
+.admin {
+    display: flex;
+    &__column {
+        flex: 1;
+        padding: 30px;
+       
+    }
+}

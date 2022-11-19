@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import store from './store/store'
 import { Provider } from 'react-redux'
+import AdminPage from './routes/AdminPage';
 
 
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />
+  },
+  {
+    path: "/admin",
+    element: <AdminPage />
   }
 ]);
 

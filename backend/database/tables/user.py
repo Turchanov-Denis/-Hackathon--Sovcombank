@@ -36,12 +36,12 @@ class User(Base):
 async def get_user(email: str, password: str) -> User | None:
     async with AsyncSessionLocal() as db_session:
         query = select(User).where(User.email == email, User.password == password)
-        find_user = (await db_session.execute(query)).first()
+        find_user = (await db_session.execute(query)).scalar()
     return find_user
 
 
 async def get_user_from_email(email: str) -> User | None:
     async with AsyncSessionLocal() as db_session:
         query = select(User).where(User.email == email)
-        find_user = (await db_session.execute(query)).first()
+        find_user = (await db_session.execute(query)).scalar()
     return find_user

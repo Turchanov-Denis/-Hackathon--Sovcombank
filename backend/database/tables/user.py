@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from backend.database import Base, AsyncSessionLocal
+from sqlalchemy.future import select
 # from sqlalchemy.orm import relationship
-from backend.database import Base
 from datetime import datetime
 
 
@@ -27,3 +28,20 @@ class User(Base):
 
     create_date = Column(DateTime, default=datetime.utcnow)
     last_update = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    is_activated = Column(Boolean, default=False, nullable=False, index=True)
+    is_blocked = Column(Boolean, default=False, nullable=False, index=True)
+
+
+async def get_user(email: str, password: str) -> User | None:
+    async with AsyncSessionLocal() as db_session:
+        query = select(User).where(User.email == email, User.password == password)
+        find_user = (await db_session.execute(query)).scalar()
+    return find_user
+
+
+async def get_user_from_email(email: str) -> User | None:
+    async with AsyncSessionLocal() as db_session:
+        query = select(User).where(User.email == email)
+        find_user = (await db_session.execute(query)).scalar()
+    return find_user

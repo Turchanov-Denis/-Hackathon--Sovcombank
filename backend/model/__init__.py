@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from pydantic import EmailStr
 
 
 class Token(BaseModel):
@@ -8,3 +9,8 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: str
+
+
+class EditUserState(BaseModel):
+    email: EmailStr
+    state: bool

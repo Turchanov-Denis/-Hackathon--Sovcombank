@@ -19,6 +19,14 @@ class RegistrationUser(BaseModel):
             raise ValueError("Email is very long (> 64 char)")
         return email
 
+    @validator("password")
+    def password_check(cls, password):
+        if len(password) < 8:
+            raise ValueError("Password is very short (< 8 char)")
+        elif len(password) > 128:
+            raise ValueError("Password is very long (> 128 char)")
+        return password
+
 
 async def check_unique_email(email: EmailStr):
     async with AsyncSessionLocal() as db_session:

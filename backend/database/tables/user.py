@@ -29,8 +29,8 @@ class User(Base):
     create_date = Column(DateTime, default=datetime.utcnow)
     last_update = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    is_activated = Column(Boolean, default=False, nullable=False)
-    is_blocked = Column(Boolean, default=False, nullable=False)
+    is_activated = Column(Boolean, default=False, nullable=False, index=True)
+    is_blocked = Column(Boolean, default=False, nullable=False, index=True)
 
 
 async def get_user(email: str, password: str) -> User | None:

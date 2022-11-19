@@ -10,7 +10,8 @@ import {
 import store from './store/store'
 import { Provider } from 'react-redux'
 import AdminPage from './routes/AdminPage';
-
+import BalanceContent from './components/Home/BalanceContent';
+import ReplenishAmount from './components/Home/ReplenishAmount';
 
 
 
@@ -18,6 +19,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      {
+        path: "/balance",
+        element: <BalanceContent />,
+      },
+      {
+        path: "/replenish",
+        element: <ReplenishAmount />,
+      },
+    ],
   },
   {
     path: "/login",
@@ -30,9 +41,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
-  </React.StrictMode>
+ 
 );

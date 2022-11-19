@@ -1,17 +1,40 @@
 import React from 'react'
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
+export default function Gate({ toAuth, setToken }) {
+    let navigate = useNavigate();
+    
 
-export default function Gate({ toAuth }) {
     const formHandler = async (e) => {
         e.preventDefault();
-        console.log(e.target[0].value, ' ', e.target[1].value)
-        const res = await axios.get('http://79.120.76.23:8888/login', {
+        const res = await axios.post('http://79.120.76.23:8888/login', {
             email: e.target[0].value,
             password: e.target[1].value
         })
-        console.log(res)
+        console.log(res.data)
+
+        if (res.status != 200) { return alert('Incorect data') }
+        
+        // set verificate
+
+        
+        setToken(res.data.access_token)
+
+        const userByToken = await axios.get('http://79.120.76.23:8888/user/info', {
+            headers: {
+                'Authorization': 'Bearer ' + res.data.access_token
+            }
+        })
+        // check on admin
+        if (userByToken.data.type == 1) {
+            navigate("/admin");
+        }
+        else {
+            navigate("/balance");
+        }
+        
 
 
     }

@@ -28,7 +28,12 @@ async def startup_event():
     await init_database()
 
     async with AsyncSessionLocal() as session:
-        session.add(User(type=1, email="admin@ad.in", password="admin123"))
+        session.add(User(type=1, email="admin@ad.in", password="adminadmin"))
+        session.add(User(type=1, email="admin1@ad.in", password="adminadmin"))
+        session.add(User(type=1, email="admin2@ad.in", password="adminadmin"))
+        session.add(User(type=1, email="admin3@ad.in", password="adminadmin"))
+        session.add(User(type=1, email="admin4@ad.in", password="adminadmin"))
+        session.add(User(type=1, email="admin5@ad.in", password="adminadmin"))
 
         session.add(User(email="user@mail.ru", password="useruser"))
         session.add(User(is_blocked=True, email="user2@mail.ru", password="useruser"))

@@ -1,8 +1,8 @@
-from backend.database.tables.user import User, get_user_from_email
-from backend.database import AsyncSession, get_session
-from backend.database.tables.history import History
+from database.tables.user import User, get_user_from_email
+from database import AsyncSession, get_session
+from database.tables.history import History
 from pydantic import BaseModel, validator, EmailStr
-from backend.auth import get_current_active_user
+from auth import get_current_active_user
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy import update
 from enum import Enum

@@ -1,9 +1,9 @@
-from backend.database import get_session, AsyncSession, AsyncSessionLocal
-from backend.database.tables.user import User, get_user_from_email
+from database import get_session, AsyncSession
+from database.tables.user import User, get_user_from_email
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, validator, EmailStr
-from backend.auth import create_access_token
-from backendConfig import FastApiConfig
+from auth import create_access_token
+from config import FastApiConfig
 from datetime import timedelta
 
 

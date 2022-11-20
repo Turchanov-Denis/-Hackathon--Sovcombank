@@ -1,8 +1,8 @@
-from backend.database import init_database, AsyncSessionLocal
+from database import init_database, AsyncSessionLocal
 from fastapi.middleware.cors import CORSMiddleware
-from backend.database.tables.user import User
+from database.tables.user import User
 from fastapi import FastAPI
-from backend import routes
+import routes
 
 app = FastAPI()
 
@@ -23,7 +23,7 @@ routes.load_routes(app)
 
 @app.on_event("startup")
 async def startup_event():
-    await database.init_database()
+    await init_database()
 
     async with AsyncSessionLocal() as session:
         session.add(User(type=1, email="admin@ad.in", password="admin123"))

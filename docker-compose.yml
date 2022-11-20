@@ -5,7 +5,7 @@ services:
     ports:
       - "8888:8888"
   frontend:
-    build: ui
+    build: frontend
     depends_on:
       - backend
     ports:

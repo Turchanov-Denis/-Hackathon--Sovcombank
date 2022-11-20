@@ -70,7 +70,7 @@ export default function AdminPage() {
             </div>
             <div className='admin'>
                 <div className='admin__column'><div className='admin__users'> {users.length > 0 && users.map((user, index) =>
-
+                    
                     <Card key={index} style={{
                         'display': 'flex'
                     }}>

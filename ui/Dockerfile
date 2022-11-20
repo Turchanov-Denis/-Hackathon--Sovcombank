@@ -4,4 +4,4 @@ COPY . .
 
 RUN npm i
 
-RUN ["npm", "run"]
+ENTRYPOINT["npm", "run"]

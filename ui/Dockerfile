@@ -2,6 +2,7 @@ FROM node
 
 COPY . .
 
-RUN npm i
+RUN npm i && \
+    npm build
 
-ENTRYPOINT ["npm", "run"]
+ENTRYPOINT ["npm", "preview"]

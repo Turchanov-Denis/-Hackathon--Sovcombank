@@ -1,4 +1,4 @@
-# -Hackathon--Sovcombank
+# Hackathon Sovcombank
 Команда: **Не баг, а фича**
 
 ## Оглавление

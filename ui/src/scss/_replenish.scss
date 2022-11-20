@@ -1,0 +1,14 @@
+.replenish {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 60px;
+    &__content {
+        width: 400px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+    }
+}

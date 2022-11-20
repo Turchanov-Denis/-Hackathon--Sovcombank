@@ -5,7 +5,7 @@ export const mainSlicer = createSlice({
     initialState: {
         authed: false,
         admin: false,
-        token: '',
+        token: "",
     },
     reducers: {
         toAuth: (state) => {
@@ -14,13 +14,13 @@ export const mainSlicer = createSlice({
         toAdmin: (state) => {
             state.admin = !state.admin
         },
-        setToken: (state,actions) => {
+        setToken: (state, actions) => {
             state.token = actions.payload
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { toAuth,toAdmin,setToken } = mainSlicer.actions
+export const { toAuth, toAdmin, setToken } = mainSlicer.actions
 
 export default mainSlicer.reducer

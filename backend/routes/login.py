@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, validator, EmailStr
 from backend.database.tables.user import get_user
 from backend.auth import create_access_token
-from backendConfig import FastApiConfig
+from backend.config import FastApiConfig
 from datetime import timedelta
 
 

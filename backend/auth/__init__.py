@@ -1,10 +1,10 @@
-from backend.database.tables.user import get_user, User, get_user_from_email
+from database.tables.user import get_user, User, get_user_from_email
 from fastapi import status, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-from backendConfig import FastApiConfig
-from backend.model import TokenData
+from .config import FastApiConfig
+from model import TokenData
 from jose import JWTError, jwt
 
 

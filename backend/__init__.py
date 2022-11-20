@@ -1,8 +1,8 @@
-from backend.database import init_database, AsyncSessionLocal
+from database import init_database, AsyncSessionLocal
 from fastapi.middleware.cors import CORSMiddleware
-from backend.database.tables.user import User
+from database.tables.user import User
 from fastapi import FastAPI
-from backend import routes
+import routes
 
 app = FastAPI()
 

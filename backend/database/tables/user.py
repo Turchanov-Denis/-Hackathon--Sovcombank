@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Float
-from backend.database import Base, AsyncSessionLocal
+from database import Base, AsyncSessionLocal
 from sqlalchemy.orm import relationship
 from sqlalchemy.future import select
 from datetime import datetime

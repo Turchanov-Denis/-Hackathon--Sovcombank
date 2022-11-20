@@ -3,6 +3,6 @@ FROM node
 COPY . .
 
 RUN npm i && \
-    npm build
+    npm run build
 
-ENTRYPOINT ["npm", "preview"]
+ENTRYPOINT ["npm", "run", "preview"]

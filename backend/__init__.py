@@ -1,3 +1,5 @@
+import random
+
 from database import init_database, AsyncSessionLocal
 from fastapi.middleware.cors import CORSMiddleware
 from database.tables.user import User
@@ -31,6 +33,29 @@ async def startup_event():
         session.add(User(email="user@mail.ru", password="useruser"))
         session.add(User(is_blocked=True, email="user2@mail.ru", password="useruser"))
         session.add(User(is_activated=True, email="user3@mail.ru", password="useruser"))
+        session.add(User(is_activated=True, is_blocked=True, email="user4@mail.ru", password="useruser"))
 
-        session.add(User(is_activated=True, is_blocked=True, email="user4@mail.ru", password="user123"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test0@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test1@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test2@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test3@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test4@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test5@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test6@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test7@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test8@mail.ru", password="testtest"))
+        session.add(User(is_activated=True, is_blocked=False,
+                         RUB=random.randrange(100, 1000), email="test9@mail.ru", password="testtest"))
+
         await session.commit()

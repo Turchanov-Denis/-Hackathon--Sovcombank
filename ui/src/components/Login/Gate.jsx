@@ -9,14 +9,17 @@ export default function Gate({ toAuth, setToken }) {
 
     const formHandler = async (e) => {
         e.preventDefault();
-        const res = await axios.post('http://79.120.76.23:8888/login', {
+        try {
+            const res = await axios.post('http://79.120.76.23:8888/login', {
             email: e.target[0].value,
             password: e.target[1].value
         })
-        console.log(res.data)
-
-        if (res.status != 200) { return alert('Incorect data') }
+        }
+        catch {
+            return alert('Incorect data') 
+        }
         
+        console.log(res.data)
         // set verificate
 
         

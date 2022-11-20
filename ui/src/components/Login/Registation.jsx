@@ -6,22 +6,25 @@ import axios from 'axios';
 export default function Registation({ toAuth, setToken }) {
     const formHandler = async (e) => {
         e.preventDefault();
-        const res = await axios.post('http://79.120.76.23:8888/reg', {
+        try {
+            const res = await axios.post('http://79.120.76.23:8888/reg', {
             email: e.target[0].value,
             password: e.target[1].value
         })
-        console.log(res.data)
-
-        if (res.status != 200) { return alert('Incorect data') }
         setToken(res.data.access_token)
+        }
+        catch {
+            return alert('Incorect data') 
+        }
+        
 
-        const userByToken = await axios.get('http://79.120.76.23:8888/user/info', {
-            headers: {
-                'Authorization': 'Bearer ' + res.data.access_token
-            }
-        })
+        // const userByToken = await axios.get('http://79.120.76.23:8888/user/info', {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + res.data.access_token
+        //     }
+        // })
 
-        console.log(userByToken.data)
+        // console.log(userByToken.data)
 
 
 

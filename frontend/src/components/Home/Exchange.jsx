@@ -114,7 +114,7 @@ export default function Exchange() {
                 <div className="trade-management__limit-form">
                     <div className="limit_form_cell">
                         <div className="trade-management__limit-inputs">
-                            <div className="trade-management__limit-title">Купить</div>
+                            <div className="trade-management__limit-title">Продать</div>
                             <form onSubmit={e => buyCurrency(e)} method="post" className="form_order_buy form-buy">
                                 <div className="trade-management__limit-body">
                                     <div className="trade-management__limit-name">

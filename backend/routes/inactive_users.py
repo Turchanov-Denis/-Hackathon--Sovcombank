@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from backend.database import AsyncSession, get_session
-from backend.auth import get_current_active_user
-from backend.database.tables.user import User
+from database import AsyncSession, get_session
+from auth import get_current_active_user
+from database.tables.user import User
 from sqlalchemy.future import select
 from sqlalchemy import and_, not_
 

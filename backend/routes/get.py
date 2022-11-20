@@ -1,5 +1,5 @@
-from backend.auth import get_current_active_user
-from backend.database.tables.user import User
+from auth import get_current_active_user
+from database.tables.user import User
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from random import random

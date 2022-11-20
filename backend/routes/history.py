@@ -1,7 +1,7 @@
-from backend.database import AsyncSession, get_session
-from backend.database.tables.history import History
-from backend.auth import get_current_active_user
-from backend.database.tables.user import User
+from database import AsyncSession, get_session
+from database.tables.history import History
+from auth import get_current_active_user
+from database.tables.user import User
 from fastapi import APIRouter, Depends
 from sqlalchemy.future import select
 

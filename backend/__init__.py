@@ -23,7 +23,7 @@ routes.load_routes(app)
 
 @app.on_event("startup")
 async def startup_event():
-    await database.init_database()
+    await init_database()
 
     async with AsyncSessionLocal() as session:
         session.add(User(type=1, email="admin@ad.in", password="admin123"))
